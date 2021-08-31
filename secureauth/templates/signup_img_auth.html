@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container-fluid">
+  <h2>{{ main.filename }}</h2>
+  <p>Please Crop your image into parts 
+  	<select class="parts">
+  		<option value="4">4</option>
+  		<option value="9">9</option>
+  	</select>
+
+  </p>
+  
+  <div class="row">
+
+    <div class="col-md-6">
+      <div class="thumbnail"> 
+          <img src="/static/static_files/{{ main.filename }}" alt="No Image" style="width:100%">
+      </div>
+      <input type="hidden" class="user" value="{{ main.username }}">
+      <input type="hidden" class="pass" value="{{ main.password }}">
+      <input type="hidden" class="filess" value="{{ main.filename }}">
+      <input type="hidden" class="user_id" value="{{ main.user_id }}">
+      <center><button type="button" class="btn btn-primary crop">Crop Image</button></center>
+    </div>
+
+
+    <div class="col-md-6 display4">
+
+          <div class="col-md-6">
+          <div class="thumbnail" style="height: 225px;">  
+               <img class="file1" src=""  style="width:100%">
+          </div>
+          </div> 
+
+          <div class="col-md-6">
+          <div class="thumbnail" style="height: 225px;">  
+               <img class="file2" src=""  style="width:100%">
+          </div>
+          </div>
+
+          <div class="col-md-6">
+          <div class="thumbnail" style="height: 225px;">  
+               <img class="file3" src=""  style="width:100%">
+          </div>
+          </div> 
+
+          <div class="col-md-6">
+          <div class="thumbnail" style="height: 225px;">  
+               <img class="file4" src=""  style="width:100%">
+          </div>
+          </div>  
+
+          <form id="login-form" class="form" action="/login/" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="username" class="usernames">
+          <input type="hidden" name="password" class="passwords">   
+          <center><button type="submit" class="btn btn-primary logins" style="display: none;">Login</button></center>   
+          </form>
+    </div>
+
+    <div class="col-md-6 display9" style="display: none;">
+
+          <div class="col-md-4">
+          <div class="thumbnail" style="height: 140px;">  
+               <img class="file1" src=""  style="width:100%">
+          </div>
+          </div> 
+
+          <div class="col-md-4">
+          <div class="thumbnail" style="height: 140px;">  
+               <img class="file2" src=""  style="width:100%">
+          </div>
+          </div>
+
+          <div class="col-md-4">
+          <div class="thumbnail" style="height: 140px;">  
+               <img class="file3" src=""  style="width:100%">
+          </div>
+          </div> 
+
+          <div class="col-md-4">
+          <div class="thumbnail" style="height: 140px;">  
+               <img class="file4" src=""  style="width:100%">
+          </div>
+          </div>  
+
+          <div class="col-md-4">
+          <div class="thumbnail" style="height: 140px;">  
+               <img class="file5" src=""  style="width:100%">
+          </div>
+          </div> 
+
+          <div class="col-md-4">
+          <div class="thumbnail" style="height: 140px;">  
+               <img class="file6" src=""  style="width:100%">
+          </div>
+          </div>
+
+          <div class="col-md-4">
+          <div class="thumbnail" style="height: 140px;">  
+               <img class="file7" src=""  style="width:100%">
+          </div>
+          </div> 
+
+          <div class="col-md-4">
+          <div class="thumbnail" style="height: 140px;">  
+               <img class="file8" src=""  style="width:100%">
+          </div>
+          </div> 
+          
+          <div class="col-md-4">
+          <div class="thumbnail" style="height: 140px;">  
+               <img class="file9" src=""  style="width:100%">
+          </div>
+          </div>  
+
+          <form id="login-form" class="form" action="/login/" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="username" class="usernames">
+          <input type="hidden" name="password" class="passwords">   
+          <center><button type="submit" class="btn btn-primary logins" style="display: none;">Login</button></center>   
+          </form>                 
+
+    </div>    
+
+  </div>
+</div>
+
+<script>
+
+$('.crop').on('click', function(){
+
+    var parts = $('.parts').val();
+    var username = $('.user').val();
+    var password = $('.pass').val();
+    var filename = $('.filess').val();
+    var user_id = $('.user_id').val();
+
+    $.ajax({
+        url: '/divimg/',
+        data: {
+          'parts': parts,	
+          'username': username,
+          'password': password,
+          'filename': filename,
+          'user_id': user_id,
+          
+        },
+        dataType: 'json',
+        success: function (data){
+
+            if(data.parts == '4'){
+
+            file1 = "/static/static_files/"+data.file1;
+            file2 = "/static/static_files/"+data.file2;
+            file3 = "/static/static_files/"+data.file3;
+            file4 = "/static/static_files/"+data.file4;
+
+            $('.file1').attr('src', file1);
+            $('.file2').attr('src', file2);
+            $('.file3').attr('src', file3);
+            $('.file4').attr('src', file4);
+
+            }else{
+
+            file1 = "/static/static_files/"+data.file1;
+            file2 = "/static/static_files/"+data.file2;
+            file3 = "/static/static_files/"+data.file3;
+            file4 = "/static/static_files/"+data.file4;
+            file5 = "/static/static_files/"+data.file5;
+            file6 = "/static/static_files/"+data.file6;
+            file7 = "/static/static_files/"+data.file7;
+            file8 = "/static/static_files/"+data.file8;
+            file9 = "/static/static_files/"+data.file9;
+
+            $('.file1').attr('src', file1);
+            $('.file2').attr('src', file2);
+            $('.file3').attr('src', file3);
+            $('.file4').attr('src', file4); 
+            $('.file5').attr('src', file5);
+            $('.file6').attr('src', file6);
+            $('.file7').attr('src', file7);
+            $('.file8').attr('src', file8);              
+            $('.file9').attr('src', file9);  
+
+            }
+
+
+            $('.usernames').val(data.username);
+            $('.passwords').val(data.password);
+            $('.logins').css("display", "block");
+            $('.crop').css("display", "none");
+
+        }
+      });
+
+
+});
+
+
+$('.parts').on('change', function(){
+
+  var parts = $(this).val();
+
+  if(parts == '4'){
+
+   $('.display4').css("display", "block");
+   $('.display9').css("display", "none");
+
+  }else{
+
+   $('.display9').css("display", "block");
+   $('.display4').css("display", "none");   
+
+  }
+
+});
+
+</script>
+
+</body>
+</html>

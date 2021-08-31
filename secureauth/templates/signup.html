@@ -1,0 +1,164 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Page Title</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+<!-- Latest compiled validate js -->
+<script src="{% static 'js/jquery.validate.min.js' %}"></script>
+
+<!------ Include the above in your HEAD tag ---------->
+<style>
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #17a2b8;
+  height: 100vh;
+}
+
+.signup-box{
+	
+  margin-top: 120px;
+  margin-left: 380px;
+  max-width: 600px;
+  height: 515px;
+  border: 1px solid #9C9C9C;
+  background-color: #EAEAEA;
+}
+
+#signup-form{
+	
+	padding: 20px;
+}
+
+.form-horizontal .form-group {
+    margin-left: 2px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="signup-box">
+
+<h4 style="text-align:center;margin-top:15px;">Register Here</h4>
+
+<form class="form-horizontal" action='/signup/' method="POST" enctype="multipart/form-data" id="signup-form">
+	{% csrf_token %}
+	<div class="form-group col-md-6">
+		<label for="firstname" class="text-info">Firstname:</label><br>
+        <input type="text" name="first_name" placeholder="Firstname" class="form-control">
+    </div>
+	
+	<div class="form-group col-md-6">
+        <label for="lastname" class="text-info">Lastname:</label><br>
+        <input type="text" name="last_name" placeholder="Lastname" class="form-control">
+      </div>
+ 
+    <div class="form-group col-md-6">
+	  <label for="E-mail" class="text-info">Username:</label><br>
+      <input type="email" name="username" placeholder="E-mail" class="form-control">
+    </div>
+ 
+    <div class="form-group col-md-6">
+	  <label for="Password" class="text-info">Password:</label><br>
+      <input type="password" name="password1" id="passwords" placeholder="Password" class="form-control">
+    </div>
+ 
+    <div class="form-group col-md-6">
+        <label for="Password (Confirm)" class="text-info">Password (Confirm):</label><br>
+        <input type="password" name="password2" placeholder="Password (Confirm)" class="form-control">
+    </div>
+    
+	<div class="form-group col-md-6">
+		<label for="Upload File" class="text-info">Upload File:</label><br>
+	    <input type="file" name="myfile" class="form-control form-control-sm">
+    </div>
+
+     <div id="register-link" class="text-right">
+          <a href="/login" class="text-info">Login here</a>
+     </div>
+	 
+    <div class="form-group">
+       <center><button class="btn btn-success" type="submit" name="submit">Register</button></center>
+    </div>
+	
+</form>
+
+</div>
+
+<script>
+		
+		// validate signup form on keyup and submit
+		
+		$("#signup-form").validate({
+			rules: {
+				firs_tname: "required",
+				last_name: "required",
+				password1: {
+					minlength: 8
+				},
+				password2: {
+					minlength: 8,
+					equalTo: "#passwords"
+				},
+				username: {
+					required: true,
+					email: true
+				},
+				contact: {
+					required: true,
+					minlength: 10,
+					maxlength:10
+				},
+				address: "required",
+				city: "required",
+				state: "required",
+				zipcode: {
+					required: true,
+					minlength: 6,
+					maxlength:6
+				}
+			
+			},
+			messages: {
+				first_name: "Please enter your firstname",
+				last_name: "Please enter your lastname",
+				
+				password1: {
+					required: "Please provide a password",
+					minlength: "Your password must be at least 8 characters long"
+				},
+				password2: {
+					required: "Please provide a password",
+					minlength: "Your password must be at least 8 characters long",
+					equalTo: "Please enter the same password as above"
+				},
+				username: "Please enter a valid email address",
+				contact: "Please enter a valid mobile number",
+				address: "Please enter a valid address",
+				city: "Please enter a city",
+				state: "Please enter a state",
+				zipcode: "Please enter a valid zipcode with 6 digit"
+			}
+		});
+		
+</script>
+
+
+</body>
+</html>
+
+

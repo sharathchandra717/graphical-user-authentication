@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html>
+
+<head>
+<title>Prediction</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+<!-- Latest compiled validate js -->
+<script src="{% static 'js/jquery.validate.min.js' %}"></script>
+
+<!------ Include the above in your HEAD tag ---------->
+</head>
+
+<style>
+
+
+.vertical-menu a {
+  background-color: #eee;
+  color: black;
+  display: block;
+  padding: 12px;
+  text-decoration: none;
+}
+
+.vertical-menu a:hover {
+  background-color: #ccc;
+}
+
+.vertical-menu a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+</style>
+
+<body>
+
+   <div class="col-md-2" style="padding: 0;height: 655px;background-color: #eee;">	
+<div class="nav-side-menu">
+  
+ <div class="vertical-menu">
+  <a href="/" class="active">View File</a>
+  <a href="/upload">Upload File</a>
+  <a href="/logout">Logout</a>
+</div>  
+</div>
+
+</div>	
+
+<div class="col-md-10" style="padding: 0;"> 
+
+ <center><h3>View File</h3></center> 
+
+{% for s in main %}
+
+<div class="col-md-2 down" srs="{{ s.id }}"> 
+
+  <center>
+  <img src="static/static_files/{{ s.myfile }}" alt="W3Schools" width="104" height="142">
+  <label>{{ s.original_filename }}</label>
+  </center>
+
+</div> 
+
+{% endfor %} 
+
+
+</div> 
+
+<script>
+
+$('.down').on('click', function(){
+
+    var srs = $(this).attr('srs');
+    window.location.href = "/downloadfile/?srs="+srs;
+
+});
+
+</script>
+
+
+</body>
+</html>

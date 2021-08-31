@@ -1,0 +1,44 @@
+{% load static %}
+<html>
+    <head>
+        <title>Django</title>
+
+<!------ Include the above in your HEAD tag ---------->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+        <!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<style>
+
+#login-signup {
+  font-size: 20px;
+  margin: 0;
+  padding: 0;
+  font-weight: 700; 
+} 
+
+</style>
+
+</head>
+    <body>
+
+<div class="col-md-12" style="padding: 0px;margin-bottom: 18px;"> 
+
+<div class="col-md-6" style="padding: 0px; margin-top: 10px;"> 
+      <form method="post" action="/" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="myfile">
+    <input type="hidden" name="original_filename" value="">
+    <input type="hidden" name="userid" value="{{ request.user.id }}">
+    <input type="hidden" name="checksum" value="">
+    <button type="submit">Upload</button>
+  </form>
+</div>
+
+</div>
+</body>
+</html>

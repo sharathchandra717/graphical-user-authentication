@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container-fluid">
+
+  <h2>{{ main.filename }}</h2>
+  <p>Please click on image as per order </p>
+  
+  <div class="col-md-12">
+   
+    <div class="col-md-7">
+
+          {% if main.lenths == 4 %}
+         
+            {% for file in main.arr_file %}
+                <div class="col-md-6">
+                     <div class="thumbnail">  
+                          <img src="/static/static_files/{{ file }}" dat="{{ file }}" style="width:100%">
+                     </div>
+                </div> 
+            {% endfor %} 
+     
+          {% else %}
+
+              {% for file in main.arr_file %}
+
+                 {% if forloop.counter == 1 or  forloop.counter == 4 or forloop.counter == 7 %}
+                  <div class="row">
+                 {% endif %}
+
+                <div class="col-md-4" style="">
+                     <div class="thumbnail" style="margin-bottom: 10px;"> 
+                          <img src="/static/static_files/{{ file }}" dat="{{ file }}" style="width:100%">
+                     </div>
+                </div>
+       
+                 {% if forloop.counter == 3 or  forloop.counter == 6 or forloop.counter == 9 %}
+                  </div>
+                 {% endif %}
+
+              {% endfor %}
+
+          {% endif %}
+
+    </div>
+
+    <div class="col-md-5">
+
+      <input type="hidden"  class="src">
+      <input type="hidden"  class="username" value="{{ main.username }}">
+      <input type="hidden"  class="password" value="{{ main.password }}">
+      <input type="hidden"  class="file_parts" value="{{ main.lenths }}">
+      <input type="hidden"  class="user_ids" value="{{ main.user_id }}">
+      <input type="hidden"  class="count_parts" value="0">
+      <input type="hidden"  class="attempts" value="0">
+      <center>
+          <input type="password"  class="passwords">
+          <button type="button" class="btn btn-primary Login">Login</button>
+           <button type="button" class="btn btn-primary Reset">Reset</button>
+      </center>
+    </div>
+
+  </div>
+   
+</div>
+
+<script>
+
+$('img').on('click', function(){
+
+    $(this).css({"border-width":"4px","border-style":"solid"});
+
+    var counts = $('.count_parts').val();
+    counts++;
+    $('.count_parts').val(counts);
+    var file_parts = $('.file_parts').val();
+
+    if(counts <= file_parts){
+
+    if(counts == file_parts){
+
+      var src = $(this).attr('dat');
+      var vals = $('.src').val();
+      var append_str = vals+src
+      $('.src').val(append_str);
+      counts_str1 = $('.passwords').val();
+      counts_str2 = 'yes';
+      counts_str = counts_str1+counts_str2
+      $('.passwords').val(counts_str);
+
+    }else{
+
+      var src = $(this).attr('dat');    
+      var vals = $('.src').val();
+      var append_str = vals+src+"-";
+      counts_str1 = $('.passwords').val();
+      counts_str2 = 'yes';
+      counts_str = counts_str1+counts_str2
+      $('.passwords').val(counts_str);
+      $('.src').val(append_str);
+
+    }
+    
+
+    }else{
+
+      var mess = "Maximum "+file_parts+" clicks are allowed";
+      alert(mess);
+      return false;
+
+    }
+
+
+});
+
+
+$('.Login').on('click', function(){
+
+    var src = $('.src').val();
+    var userid = $('.user_ids').val();
+    
+
+    $.ajax({
+        url: '/checklogin/',
+        data: {
+          'src': src, 
+          'userid': userid,       
+        },
+        dataType: 'json',
+        success: function (data){
+
+            if(data.check == 'yes'){
+
+               alert('Logged in sucessfully');
+
+               var firstname = data.firstname;
+               var lastname = data.lastname;
+               var email = data.email;
+
+               window.location.href = "/profile/?firstname="+firstname+"&lastname="+lastname+"&email="+email;
+
+            }else{
+               alert('Logged in failed');
+               var attempts_counts = $('.attempts').val();
+               attempts_counts++;
+               $('.attempts').val(attempts_counts);
+               if(attempts_counts == '3'){
+                  alert('maximum 3 attempts are allowed');
+                   window.location.href = "/logout/";
+               }
+            }
+
+        }
+      });
+
+
+});
+
+
+$('.Reset').on('click', function(){
+
+  $('.src').val('');
+  $('.passwords').val('');
+  $('img').css({"border-width":"0px","border-style":"none"});
+  $('.count_parts').val('0');
+
+});
+
+</script>
+
+</body>
+</html>

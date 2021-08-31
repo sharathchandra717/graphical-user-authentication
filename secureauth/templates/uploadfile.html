@@ -1,0 +1,118 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html>
+
+<head>
+<title>Prediction</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+<!-- Latest compiled validate js -->
+<script src="{% static 'js/jquery.validate.min.js' %}"></script>
+
+<!------ Include the above in your HEAD tag ---------->
+</head>
+
+<style>
+
+
+.vertical-menu a {
+  background-color: #eee;
+  color: black;
+  display: block;
+  padding: 12px;
+  text-decoration: none;
+}
+
+.vertical-menu a:hover {
+  background-color: #ccc;
+}
+
+.vertical-menu a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+</style>
+
+<body>
+
+   <div class="col-md-2" style="padding: 0;height: 655px;background-color: #eee;">	
+<div class="nav-side-menu">
+  
+ <div class="vertical-menu">
+  <a href="/" >View File</a>
+  <a href="/upload" class="active">Upload File</a>
+  <a href="/logout">Logout</a>
+</div>  
+</div>
+
+</div>	
+
+  <div class="col-md-10" style="padding: 0;"> 
+
+
+<div class="col-md-12" style="padding: 0px;margin-bottom: 18px;"> 
+
+<div class="col-md-2" style="padding: 0px;margin-top: 6px;"> 
+     
+</div>
+
+<div class="col-md-6" style="padding: 0px; margin-top: 10px;"> 
+
+   <!--<form method="post" action="/" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="myfile">
+    <input type="hidden" name="original_filename" value="">
+    <input type="hidden" name="userid" value="{{ request.user.id }}">
+    <input type="hidden" name="checksum" value="">
+    <button type="submit">Upload</button>
+  </form>-->
+
+
+<form  action="/uploadfile/" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+    <fieldset>
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="row">
+                <label class="control-label col-md-2 text-right" for="filename"><span>File</span></label>
+                <div class="col-md-10">
+                    <div class="input-group">
+                        <!--<input type="file" id="uploadedFile" name="uploadedFile" class="form-control form-control-sm" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">-->
+                        <input type="file" name="myfile" class="form-control form-control-sm">
+                        <input type="hidden" name="original_filename" value="">
+                        <input type="hidden" name="userid" value="{{ request.user.id }}">
+                        <input type="hidden" name="checksum" value="">
+                        <div class="input-group-btn">
+                            <input type="submit" value="Upload" class="rounded-0 btn btn-primary">
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>                        
+        </div>
+    </fieldset>    
+</form>
+
+
+     
+</div>
+
+<div class="col-md-2" style="padding: 0px;"> 
+
+
+</div>
+
+</div>
+
+</div> 
+
+
+</body>
+</html>
